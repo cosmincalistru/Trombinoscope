@@ -1,19 +1,16 @@
 package hgrup.trombi.entity;
 
-
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "Persons")
 @Getter
 @Setter
-public class User {
+public class Person {
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
@@ -21,13 +18,13 @@ public class User {
     private Long id;
 
     @Column(name = "NAME")
-    @Size(max = 20, min = 3, message = "{user.name.invalid}")
-    @NotEmpty(message="Please Enter your name")
     private String name;
 
     @Column(name = "EMAIL", unique = true)
-    @Email(message = "{user.email.invalid}")
-    @NotEmpty(message="Please Enter your email")
     private String email;
+
+    @Column(name = "BORN")
+    @Temporal(TemporalType.DATE)
+    private Date born;
 
 }
