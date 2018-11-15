@@ -20,7 +20,7 @@ public class PersonPhoto {
     @JoinColumn(name = "PERSON_ID")
     private Person person;
 
-    @Column(name = "PHOTO", columnDefinition = "BLOB")
+    @Column(name = "PHOTO")
     @Lob
     private byte[] photo;
 
