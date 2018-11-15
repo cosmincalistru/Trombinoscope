@@ -1,14 +1,16 @@
 package hgrup.trombi.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "PERSON_PHOTOS")
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class PersonPhoto {
 
     @Id
@@ -26,4 +28,7 @@ public class PersonPhoto {
 
     @Column(name = "URL")
     private String url;
+
+    @Column(name = "FILENAME")
+    private String fileName;
 }
