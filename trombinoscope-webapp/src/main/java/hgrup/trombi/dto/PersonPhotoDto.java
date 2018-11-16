@@ -15,4 +15,5 @@ public class PersonPhotoDto {
     private Long id;
     private byte[] photo;
     private String fileName;
+    private PersonDto personDto;
 }

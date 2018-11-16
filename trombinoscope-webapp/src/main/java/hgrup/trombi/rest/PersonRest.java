@@ -2,7 +2,6 @@ package hgrup.trombi.rest;
 
 import hgrup.trombi.dto.PersonDto;
 import hgrup.trombi.dto.PersonPhotoDto;
-import hgrup.trombi.entity.Person;
 import hgrup.trombi.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FileCopyUtils;
@@ -10,12 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
 import java.util.List;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.http.MediaType.APPLICATION_OCTET_STREAM_VALUE;
 
 @RestController
 @RequestMapping("person")
@@ -24,24 +25,22 @@ public class PersonRest {
     @Autowired
     private PersonService personService;
 
-    @GetMapping("/")
+    @GetMapping(value = "/", produces = APPLICATION_JSON_VALUE)
     public List<PersonDto> listPersons() {
         return personService.list();
     }
 
-    @PostMapping("/")
-    public void addPerson(@RequestBody PersonDto p) {
-        System.out.println();
-
-        personService.save(p);
+    @PostMapping(value = "/", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public PersonDto addPerson(@RequestBody PersonDto p) {
+        return personService.save(p);
     }
 
-    @PostMapping("/{id}/photo/")
-    public void addPhoto(@RequestParam("file") MultipartFile file, @PathVariable("id") Long personId) {
-        personService.savePhoto(file, personId);
+    @PostMapping(value = "/{userId}/photo/", produces = APPLICATION_JSON_VALUE)
+    public PersonPhotoDto addPhoto(@RequestParam("file") MultipartFile file, @PathVariable("userId") Long personId) {
+        return personService.savePhoto(file, personId);
     }
 
-    @GetMapping("/{userId}/photo/{photoId}")
+    @GetMapping(value = "/{userId}/photo/{photoId}", produces = APPLICATION_OCTET_STREAM_VALUE)
     public void getPhoto(HttpServletResponse response, @PathVariable("userId") Long userId, @PathVariable("photoId") Long photoId) throws IOException {
         PersonPhotoDto photo = personService.getPhoto(photoId);
 

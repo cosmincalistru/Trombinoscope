@@ -19,7 +19,6 @@ public class PersonPhotoDaoImpl implements PersonPhotoDao {
     @Override
     public void save(PersonPhoto person) {
         sessionFactory.getCurrentSession().save(person);
-        System.out.println(person.getId());
     }
 
     @Override
